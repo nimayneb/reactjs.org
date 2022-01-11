@@ -152,7 +152,7 @@ It works because in JavaScript, `true && expression` always evaluates to `expres
 
 Therefore, if the condition is `true`, the element right after `&&` will appear in the output. If it is `false`, React will ignore and skip it.
 
-Note that returning a falsy expression will still cause the element after `&&` to be skipped but will return the falsy expression. In the example below, `<div>0</div>` will be returned by the render method.
+Note that returning a presumptive falsy expression will cause the element after `&&` to be skipped but can return the value of an expression. In the example below, `<div>0</div>` will be returned by the render method, because of the constant `count` with the value `0`.
 
 ```javascript{2,5}
 render() {
@@ -160,6 +160,19 @@ render() {
   return (
     <div>
       { count && <h1>Messages: {count}</h1>}
+    </div>
+  );
+}
+```
+
+You have to express a Boolean if you want to prevent a content. So in this case you will get an empty content (`false`):
+
+```javascript{2,5}
+render() {
+  const count = 0;
+  return (
+    <div>
+      { (count > 0) && <h1>Messages: {count}</h1>}
     </div>
   );
 }
